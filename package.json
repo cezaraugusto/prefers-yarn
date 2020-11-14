@@ -5,7 +5,7 @@
     "node": ">=10"
   },
   "name": "prefers-yarn",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Check whether the working directory prefers yarn over npm",
   "main": "module.js",
   "author": "Cezar Augusto <boss@cezaraugusto.net> (https://cezaraugusto.net)",
