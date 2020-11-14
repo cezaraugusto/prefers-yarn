@@ -14,6 +14,7 @@ npm install prefers-yarn
 ```
 
 ## Usage
+
 ```js
 const prefersYarn = require('prefers-yarn')
 
