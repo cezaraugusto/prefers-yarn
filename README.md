@@ -1,66 +1,29 @@
-[action-image]: https://github.com/cezaraugusto/node-module-quick-start/workflows/CI/badge.svg
-[action-url]: https://github.com/cezaraugusto/node-module-quick-start/actions
-[npm-image]: https://img.shields.io/npm/v/node-module-quick-start.svg
-[npm-url]: https://npmjs.org/package/node-module-quick-start
+[action-image]: https://github.com/cezaraugusto/prefers-yarn/workflows/CI/badge.svg
+[action-url]: https://github.com/cezaraugusto/prefers-yarn/actions
+[npm-image]: https://img.shields.io/npm/v/prefers-yarn.svg
+[npm-url]: https://npmjs.org/package/prefers-yarn
 
-# node-module-quick-start [![workflow][action-image]][action-url] [![npm][npm-image]][npm-url]
+# prefers-yarn [![workflow][action-image]][action-url] [![npm][npm-image]][npm-url]
 
-> Template for creating new `node_modules`
-
-Looking to publish a new Node.js module? Start here!
+> Check whether the working directory prefers yarn over npm
 
 ## Installation
 
-### Via GitHub clone
-
 ```
-git@github.com:cezaraugusto/node-module-quick-start.git
-```
-
-### Via GitHub "Use this template" feature
-
-1. Click the big green "Use this template" button
-2. Replace `Cezar Augusto` with your name
-3. Replace `cezaraugusto` with your username
-4. Replace `boss@cezaraugusto.net` with your email
-5. Replace `https://cezaraugusto.net` with your URL
-6. Replace `node-module-quick-start` with your module name
-7. HAVE FUN!
-
-### Via npm
-
-Alternatively, you can install this module as-is and hack from there
-
-```
-# node_modules/node-module-quick-start will include this repo
-npm install node-module-quick-start
+npm install prefers-yarn
 ```
 
 ## Usage
-
-This repo includes a sample program:
-
 ```js
-const sleepySays = require('./node-module-quick-start')
+const prefersYarn = require('prefers-yarn')
 
-sleepySays('hello!') // ( o ‿ ~ ✿) hello!
+const useYarn = prefersYarn() // boolean
 
-// When sleepy is sleeping
+if (useYarn) {
+  // do stuff
+}
 
-sleepySays('hello!', true) // (◡ ‿ ◡ ✿) zZZz
 ```
-## API
-
-### sleepySays(say, isSleepySleeping?)
-
-#### say
-
-Type: `string`
-
-#### isSleepySleeping
-
-Type: `boolean`\
-Default: `false`
 
 ## License
 
