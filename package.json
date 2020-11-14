@@ -5,7 +5,7 @@
     "node": ">=10"
   },
   "name": "prefers-yarn",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Check whether the working directory prefers yarn over npm",
   "main": "module.js",
   "author": "Cezar Augusto <boss@cezaraugusto.net> (https://cezaraugusto.net)",
@@ -16,8 +16,12 @@
     "module.js"
   ],
   "keywords": [
-    "template",
-    "node-module"
+    "yarn",
+    "npm",
+    "check",
+    "is",
+    "use",
+    "using"
   ],
   "devDependencies": {
     "fs-extra": "^9.0.1",
