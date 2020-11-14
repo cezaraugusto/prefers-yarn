@@ -1,8 +1,6 @@
-function sleepySays (input, isSleepySleeping) {
-  if (isSleepySleeping) {
-    return '(◡ ‿ ◡ ✿) zZZz'
-  }
-  return `( o ‿ ~ ✿) ${input}`
-}
+const fs = require('fs')
+const path = require('path')
 
-module.exports = sleepySays
+module.exports = function () {
+  return fs.existsSync(path.resolve(process.cwd(), 'yarn.lock'))
+}
