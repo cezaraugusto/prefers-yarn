@@ -3,7 +3,7 @@
   "repository": "https://github.com/cezaraugusto/prefers-yarn.git",
   "name": "prefers-yarn",
   "version": "2.0.0",
-  "description": "Detect the package manager (npm, yarn, pnpm, bun) a project prefers — user-agent, lockfile, packageManager field, corepack, and Windows-safe command resolution.",
+  "description": "Detect the package manager (npm, yarn, pnpm, bun) a project prefers: user-agent, lockfile, packageManager field, corepack, and Windows-safe command resolution.",
   "homepage": "https://www.npmjs.com/package/prefers-yarn",
   "type": "module",
   "exports": {

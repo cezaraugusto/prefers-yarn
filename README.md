@@ -5,9 +5,9 @@
 
 # prefers-yarn [![workflow][action-image]][action-url] [![npm][npm-image]][npm-url]
 
-> Detect which package manager (npm, yarn, pnpm, bun) a project prefers — and build the right commands to run it.
+> Detect which package manager (npm, yarn, pnpm, bun) a project prefers, and build the right commands to run it.
 
-Most detection libraries stop at "is there a yarn.lock?". `prefers-yarn` v2 goes further: it inspects the invoking process (`npm_config_user_agent` / `npm_execpath`), sniffs all modern lockfiles (`pnpm-lock.yaml`, `yarn.lock`, `bun.lockb`/`bun.lock`, `package-lock.json`), reads the corepack `packageManager` field, probes the PATH with Windows-safe resolution (`where.exe`, `.cmd` shims), can route through corepack, and falls back to the npm CLI bundled with the current Node.js install — so CLI authors always get a runnable package manager. Zero dependencies.
+Most detection libraries stop at "is there a yarn.lock?". `prefers-yarn` v2 goes further: it inspects the invoking process (`npm_config_user_agent` / `npm_execpath`), sniffs all modern lockfiles (`pnpm-lock.yaml`, `yarn.lock`, `bun.lockb`/`bun.lock`, `package-lock.json`), reads the corepack `packageManager` field, probes the PATH with Windows-safe resolution (`where.exe`, `.cmd` shims), can route through corepack, and falls back to the npm CLI bundled with the current Node.js install, so CLI authors always get a runnable package manager. Zero dependencies.
 
 ## Installation
 
@@ -74,7 +74,7 @@ package manager launched my CLI?".
 ### `getPackageManagerSpec()` / `getPackageManagerVersion()`
 
 Parse the invoking package manager's version from
-`npm_config_user_agent` — `'pnpm@9.9.0'` or
+`npm_config_user_agent`: `'pnpm@9.9.0'` or
 `{ name: 'pnpm', version: '9.9.0' }`, or `null` when unavailable.
 
 ### `detectPackageManagerFromLockfile(cwd)` / `detectPackageManagerFromPackageJson(cwd)`
@@ -119,8 +119,8 @@ const prefersYarn = require('prefers-yarn')
 prefersYarn() // boolean
 ```
 
-In v2 the same function is still there — as both the default and a named
-export — but the package now ships ESM + CJS builds, so CJS consumers should
+In v2 the same function is still there, as both the default and a named
+export, but the package now ships ESM + CJS builds, so CJS consumers should
 destructure:
 
 ```js
@@ -130,7 +130,7 @@ const { prefersYarn } = require('prefers-yarn')
 import prefersYarn from 'prefers-yarn'
 ```
 
-For new code, prefer `detectPackageManager()` — it answers the broader
+For new code, prefer `detectPackageManager()`: it answers the broader
 question ("which package manager?") instead of just "is it yarn?".
 
 v2 requires Node.js >= 18.
