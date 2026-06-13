@@ -1,30 +1,59 @@
 {
   "license": "MIT",
   "repository": "https://github.com/cezaraugusto/prefers-yarn.git",
-  "engines": {
-    "node": ">=10"
-  },
   "name": "prefers-yarn",
-  "version": "1.0.1",
-  "description": "Check whether the working directory prefers yarn over npm",
-  "main": "module.js",
-  "author": "Cezar Augusto <boss@cezaraugusto.net> (https://cezaraugusto.net)",
-  "scripts": {
-    "test": "jest"
+  "version": "2.0.0",
+  "description": "Detect the package manager (npm, yarn, pnpm, bun) a project prefers — user-agent, lockfile, packageManager field, corepack, and Windows-safe command resolution.",
+  "homepage": "https://www.npmjs.com/package/prefers-yarn",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
   },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
   "files": [
-    "module.js"
+    "dist"
   ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "rslib build",
+    "check": "biome check --write",
+    "dev": "rslib build --watch",
+    "format": "biome format --write",
+    "test": "vitest run",
+    "prepublishOnly": "npm run build",
+    "publish:provenance": "np major --no-tests --any-branch --yolo --message 'release: %s' --provenance"
+  },
+  "publishConfig": {
+    "provenance": true
+  },
+  "author": "Cezar Augusto <boss@cezaraugusto.net> (https://cezaraugusto.net)",
   "keywords": [
     "yarn",
     "npm",
+    "pnpm",
+    "bun",
+    "package-manager",
+    "detect",
+    "corepack",
+    "lockfile",
     "check",
     "is",
     "use",
     "using"
   ],
   "devDependencies": {
-    "fs-extra": "^9.0.1",
-    "jest": "^26.6.1"
-  }
+    "@biomejs/biome": "^1.9.4",
+    "@rslib/core": "^0.6.9",
+    "@types/node": "^22.8.1",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.3"
+  },
+  "packageManager": "pnpm@9.9.0"
 }
