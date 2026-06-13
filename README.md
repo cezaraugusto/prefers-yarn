@@ -5,7 +5,9 @@
 
 # prefers-yarn [![workflow][action-image]][action-url] [![npm][npm-image]][npm-url]
 
-> Check whether the working directory prefers yarn over npm
+> Detect which package manager (npm, yarn, pnpm, bun) a project prefers , and build the right commands to run it.
+
+Most detection libraries stop at "is there a yarn.lock?". `prefers-yarn` v2 goes further: it inspects the invoking process (`npm_config_user_agent` / `npm_execpath`), sniffs all modern lockfiles (`pnpm-lock.yaml`, `yarn.lock`, `bun.lockb`/`bun.lock`, `package-lock.json`), reads the corepack `packageManager` field, probes the PATH with Windows-safe resolution (`where.exe`, `.cmd` shims), can route through corepack, and falls back to the npm CLI bundled with the current Node.js install , so CLI authors always get a runnable package manager. Zero dependencies.
 
 ## Installation
 
@@ -16,15 +18,122 @@ npm install prefers-yarn
 ## Usage
 
 ```js
-const prefersYarn = require('prefers-yarn')
+import { detectPackageManager } from 'prefers-yarn'
 
-const useYarn = prefersYarn() // boolean
+detectPackageManager()
+// => 'npm' | 'yarn' | 'pnpm' | 'bun'
 
-if (useYarn) {
-  // do stuff
-}
-
+detectPackageManager({ cwd: '/path/to/project' })
+// => respects that project's lockfile / packageManager field
 ```
+
+Building and running an install command:
+
+```js
+import {
+  resolvePackageManager,
+  buildInstallCommand,
+  runCommand
+} from 'prefers-yarn'
+
+const pm = resolvePackageManager({ cwd: projectDir })
+// => { name: 'pnpm', execPath: '/usr/local/bin/pnpm' }
+
+const { command, args } = buildInstallCommand(pm, ['install', '--silent'])
+await runCommand(command, args, { cwd: projectDir, stdio: 'inherit' })
+```
+
+## API
+
+### `detectPackageManager(opts?)`
+
+Returns `'npm' | 'yarn' | 'pnpm' | 'bun'`. Resolution order:
+
+1. Lockfile in `opts.cwd` (`pnpm-lock.yaml`, `yarn.lock`, `bun.lockb`/`bun.lock`, `package-lock.json`)
+2. `packageManager` field in the package.json at `opts.cwd` (corepack)
+3. `PREFERRED_PACKAGE_MANAGER` / `PREFERRED_PM_EXEC_PATH` env overrides
+4. Invoking process env (`npm_config_user_agent`, `npm_execpath`)
+5. pnpm, yarn, or bun found on PATH
+6. corepack
+7. The npm CLI bundled with the current Node.js install
+8. `'npm'` as a last resort
+
+### `resolvePackageManager(opts?)`
+
+Same resolution order, but returns the full
+`{ name, execPath?, runnerCommand?, runnerArgs? }` shape so you can actually
+spawn the package manager (e.g. `node /path/to/npm-cli.js` or
+`corepack pnpm`).
+
+### `detectPackageManagerFromEnv()`
+
+Environment-only detection (user agent, then `npm_execpath` /
+`NPM_EXEC_PATH` / `BUN_INSTALL`). Defaults to `'npm'`. Useful for "which
+package manager launched my CLI?".
+
+### `getPackageManagerSpec()` / `getPackageManagerVersion()`
+
+Parse the invoking package manager's version from
+`npm_config_user_agent` , `'pnpm@9.9.0'` or
+`{ name: 'pnpm', version: '9.9.0' }`, or `null` when unavailable.
+
+### `detectPackageManagerFromLockfile(cwd)` / `detectPackageManagerFromPackageJson(cwd)`
+
+The individual project-level heuristics, exported for composing your own
+ordering. Both return a name or `undefined`.
+
+### `buildInstallCommand(pm, args)`
+
+Turns a `PackageManagerResolution` into a spawnable `{ command, args }`,
+keeping JS entrypoints under `node` and executing native/Windows binaries
+directly.
+
+### `buildNpmCliFallback(args)`
+
+`{ command, args }` for the npm CLI bundled with the running Node.js
+(`node /path/to/npm-cli.js ...args`), or `undefined` if it can't be found.
+
+### `runCommand(command, args, options?)`
+
+Promise-based `spawn` wrapper that handles Windows `.cmd`/`.bat` shells and
+ensures the Node.js directory is on PATH. Options: `cwd`,
+`stdio` (`'inherit' | 'ignore' | 'pipe'`, default `'ignore'`).
+
+### `resolveCommandOnPath(command)` / `canRunCorepack()` / `buildExecEnv()`
+
+Lower-level helpers: Windows-safe executable resolution (prefers `.cmd`
+shims via `where.exe`, uses `which` elsewhere), corepack availability, and a
+Windows PATH-patched env for spawning.
+
+### `prefersYarn(cwd?)` (default export)
+
+The v1 API: `true` when a `yarn.lock` exists in `cwd` (default
+`process.cwd()`).
+
+## Migrating from v1
+
+v1 exported a single function:
+
+```js
+const prefersYarn = require('prefers-yarn')
+prefersYarn() // boolean
+```
+
+In v2 the same function is still there , as both the default and a named
+export , but the package now ships ESM + CJS builds, so CJS consumers should
+destructure:
+
+```js
+// CJS
+const { prefersYarn } = require('prefers-yarn')
+// ESM
+import prefersYarn from 'prefers-yarn'
+```
+
+For new code, prefer `detectPackageManager()` , it answers the broader
+question ("which package manager?") instead of just "is it yarn?".
+
+v2 requires Node.js >= 18.
 
 ## License
 
