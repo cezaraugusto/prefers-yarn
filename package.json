@@ -35,18 +35,20 @@
   },
   "author": "Cezar Augusto <boss@cezaraugusto.net> (https://cezaraugusto.net)",
   "keywords": [
-    "yarn",
+    "package-manager",
+    "package-manager-detection",
+    "detect",
     "npm",
+    "yarn",
     "pnpm",
     "bun",
-    "package-manager",
-    "detect",
     "corepack",
     "lockfile",
-    "check",
-    "is",
-    "use",
-    "using"
+    "user-agent",
+    "install-command",
+    "cli",
+    "nodejs",
+    "windows"
   ],
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
