@@ -137,6 +137,15 @@ question ("which package manager?") instead of just "is it yarn?".
 
 v2 requires Node.js >= 18.
 
+## Related projects
+
+* [pintor](https://github.com/cezaraugusto/pintor)
+* [log-md](https://github.com/cezaraugusto/log-md)
+* [mklicense](https://github.com/cezaraugusto/mklicense)
+* [go-git-it](https://github.com/cezaraugusto/go-git-it)
+* [git-precision](https://github.com/cezaraugusto/git-precision)
+* [isolated-deps](https://github.com/cezaraugusto/isolated-deps)
+
 ## License
 
 MIT (c) Cezar Augusto.
