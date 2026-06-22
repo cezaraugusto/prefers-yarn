@@ -4,10 +4,12 @@
 [npm-downloads-url]: https://www.npmjs.com/package/prefers-yarn
 [action-image]: https://github.com/cezaraugusto/prefers-yarn/actions/workflows/ci.yml/badge.svg?branch=main
 [action-url]: https://github.com/cezaraugusto/prefers-yarn/actions
+[provenance-image]: https://img.shields.io/badge/provenance-verified-0971fe?logo=npm&logoColor=white
+[provenance-url]: https://www.npmjs.com/package/prefers-yarn
 
 > Detect the package manager (npm, yarn, pnpm, bun) a project prefers, then resolve a runnable command for it.
 
-# prefers-yarn [![Version][npm-version-image]][npm-version-url] [![Downloads][npm-downloads-image]][npm-downloads-url] [![workflow][action-image]][action-url]
+# prefers-yarn [![Version][npm-version-image]][npm-version-url] [![Downloads][npm-downloads-image]][npm-downloads-url] [![workflow][action-image]][action-url] [![provenance][provenance-image]][provenance-url]
 
 `prefers-yarn` combines several signals (lockfiles, the `packageManager` field, `npm_config_user_agent`, corepack) to detect the package manager a project prefers:
 
