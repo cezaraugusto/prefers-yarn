@@ -9,7 +9,7 @@
 
 # prefers-yarn [![Version][npm-version-image]][npm-version-url] [![Downloads][npm-downloads-image]][npm-downloads-url] [![workflow][action-image]][action-url]
 
-Most detection libraries stop at "is there a yarn.lock?". `prefers-yarn` v2 goes further. It combines several signals to pick the right package manager:
+`prefers-yarn` combines several signals (lockfiles, the `packageManager` field, `npm_config_user_agent`, corepack) to detect the package manager a project prefers:
 
 * the invoking process (`npm_config_user_agent` / `npm_execpath`)
 * modern lockfiles (`pnpm-lock.yaml`, `yarn.lock`, `bun.lockb`/`bun.lock`, `package-lock.json`)
