@@ -5,11 +5,18 @@
 [action-image]: https://github.com/cezaraugusto/prefers-yarn/actions/workflows/ci.yml/badge.svg?branch=main
 [action-url]: https://github.com/cezaraugusto/prefers-yarn/actions
 
-> Detect the package manager (npm, yarn, pnpm, bun) a project prefers: user-agent, lockfile, packageManager field, corepack, and Windows-safe command resolution.
+> Detect the package manager (npm, yarn, pnpm, bun) a project prefers, then resolve a runnable command for it.
 
 # prefers-yarn [![Version][npm-version-image]][npm-version-url] [![Downloads][npm-downloads-image]][npm-downloads-url] [![workflow][action-image]][action-url]
 
-Most detection libraries stop at "is there a yarn.lock?". `prefers-yarn` v2 goes further: it inspects the invoking process (`npm_config_user_agent` / `npm_execpath`), sniffs all modern lockfiles (`pnpm-lock.yaml`, `yarn.lock`, `bun.lockb`/`bun.lock`, `package-lock.json`), reads the corepack `packageManager` field, probes the PATH with Windows-safe resolution (`where.exe`, `.cmd` shims), can route through corepack, and falls back to the npm CLI bundled with the current Node.js install, so CLI authors always get a runnable package manager. Zero dependencies.
+Most detection libraries stop at "is there a yarn.lock?". `prefers-yarn` v2 goes further. It combines several signals to pick the right package manager:
+
+* the invoking process (`npm_config_user_agent` / `npm_execpath`)
+* modern lockfiles (`pnpm-lock.yaml`, `yarn.lock`, `bun.lockb`/`bun.lock`, `package-lock.json`)
+* the corepack `packageManager` field
+* a Windows-safe PATH probe (`where.exe`, `.cmd` shims)
+
+When the preferred manager is not directly runnable, it routes through corepack or falls back to the npm CLI bundled with the current Node.js install, so CLI authors always get a runnable package manager. Zero dependencies.
 
 ## Installation
 
